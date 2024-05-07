@@ -1,1 +1,150 @@
 /* You can add global styles to this file, and also import other style files */
+.container {
+  width: 523px;
+  height: 770;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.container app-top-bar {
+  width: 773px;
+  height: 50px;
+  background-color: #f0f0f0;
+  border-radius: 15px 15px 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  //border: 2px solid #f0f0f0;
+}
+
+.container app-top-bar h1 {
+  color: rgb(0, 0, 0);
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}
+
+.container .content app-chats-list {
+  flex: 0 0 360px;
+  height: 473px;
+  background-color: #fcfcfc;
+  display: flex;
+  flex-direction:column;
+  //justify-content: space-between;
+  align-items:normal;
+  border-radius: 0 0 0 15px;
+  border: 0.5px solid #f0f0f0;
+}
+
+.container .content app-chat-current {
+  flex: 0 0 410px;
+  height: 473px;
+  background-color: #fafafa;
+  border-radius: 0 0 15px 0;
+  border: 0.5px solid #f0f0f0;
+  border-left: none;
+}
+
+.cancel-icon{
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
+  background-image: url('svg-pic/cancel.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.burger-icon{
+  width: 20px;
+  height: 20px;
+  margin-left: 20px;
+  background-image: url('svg-pic/burger.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.search-container {
+  width: 250px;
+  height: 28px;
+  display: flex;
+  margin-right: 80px;
+  //border: 1px solid #be3e3e;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+.search-container .lupa {
+  width: 17px;
+  height: 17px;
+  margin-left: 7px;
+  align-self: center;
+  background-image: url('svg-pic/lupa.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.search-container .search {
+  font-family: 'Sitara', Arial, sans-serif;
+  margin-left: 7px;
+  font-size: 13px;
+  color: #9b9b9b;
+  //font-weight: bold;
+  align-self: center;
+}
+
+.name-container {
+  width: 250px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  //margin-left: 230px;
+  //border: 1px solid #be3e3e;
+}
+
+.FIO {
+  font-family: 'Sitara', Arial, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  align-self: center;
+  color: #5c5b5b;
+}
+
+.dots {
+  width: 18px;
+  height: 18px;
+  margin-left: 20px;
+  background-image: url('svg-pic/3-dots.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  align-self: center;
+}
+
+.dialog {
+  width: 360px;
+  height: 70px;
+  border: 0.5px solid #f0f0f0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  display: flex;
+}
+
+.ava {
+  width: 34px;
+  height: 34px;
+  margin-left: 18px;
+  background-image: url('svg-pic/ava.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  align-self: center;
+}
