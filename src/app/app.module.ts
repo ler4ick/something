@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,10 @@ import { ChatCurrentComponent } from './chat-current/chat-current.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    RouterModule.forRoot([
+      { path: '', component: ChatContainerComponent },
+      { path: 'persons/:personId', component: ChatCurrentComponent },
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

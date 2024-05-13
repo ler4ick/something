@@ -1,11 +1,13 @@
-<div class="dialog" *ngFor="let person of persons" (click)="selectDialog(person.id)" [class.selected]="person.id === selectedDialogId">
-  <div class="ava"></div>
-  <div class="cont-col">
-    <div class="name-dial"> {{ person.name + ' ' + person.lastname }} </div>
-    <div class="text">хочется пирожных</div>
-    <div class="zakrep"></div>
-    <div class="time-rec-sen">20:30</div>
-  </div>
+<a class="dialog" *ngFor="let person of persons" [title]="person.name + 'dialog'" [routerLink]="['/persons', person.id]">
 
-</div>
+    <div class="ava"></div>
+    <div class="cont-col">
+      <div class="name-dial"> {{ person.name + ' ' + person.lastname }} </div>
+      <div class="text">хочется пирожных</div>
+      <div class="zakrep"></div>
+      <div class="time-rec-sen">20:30</div>
+    </div>
+
+
+</a>
 

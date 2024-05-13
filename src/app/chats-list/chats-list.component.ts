@@ -9,9 +9,5 @@ import { persons } from '../persons';
 export class ChatsListComponent {
   persons = [...persons];
 
-  selectedDialogId: number | null = null;
 
-  selectDialog(dialogId: number) {
-    this.selectedDialogId = dialogId;
-  }
 }
