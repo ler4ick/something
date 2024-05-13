@@ -13,4 +13,5 @@ export class ChatService {
   setSelectedChatId(id: number) {
     this.selectedChatIdSubject.next(id);
   }
+
 }

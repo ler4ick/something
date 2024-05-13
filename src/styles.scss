@@ -249,17 +249,23 @@
 
         .text-area{
           width: 254px;
-          height: 36px;
           margin-top: 12px;
           margin-bottom: 12px;
-          color: #666E79;
-          //border: 1px solid #be3e3e;
-          font-family: 'Sitara', Arial, sans-serif;
-          font-size: 15px;
-          //text-align: center;
           display: flex;
           align-items: center;
-          justify-content: center;
+
+          textarea{
+            width: 100%;
+            resize:none;
+	          border:none;
+            display:block;
+            outline: none;
+            background-color:#fafafa;
+            font-family: 'Sitara', Arial, sans-serif;
+            color: #4e525f;
+            font-size: 15px;
+            height: 20px;
+          }
         }
 
         .emoji{
