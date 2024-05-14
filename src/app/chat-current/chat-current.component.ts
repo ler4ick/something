@@ -24,4 +24,16 @@ export class ChatCurrentComponent {
       }
     });
   }
+
+  newMessage: string = '';
+  messages: string[] = [];
+
+  sendMessage() {
+    if (this.newMessage) {
+      this.messages.push(this.newMessage);
+      this.newMessage = '';
+    }
+  }
+
+
 }

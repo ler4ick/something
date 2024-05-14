@@ -170,8 +170,6 @@
 
     app-chat-current {
       flex: 0 0 410px;
-      //width: 410px;
-      //height: 473px;
       background-color: #fafafa;
       border-radius: 0 0 15px 0;
       border: 0.5px solid #f0f0f0;
@@ -180,14 +178,12 @@
       flex-direction: column;
 
       .chat-area{
-        //width: 410px;
         height: 413px;
+        overflow-y: auto; //скроллбар
 
         .message-block-rec {
           max-width: 230px;
-         //min-width: 35px;
           width: fit-content;
-          //height: 80px;
           margin: 10px;
           border-radius: 5px;
           font-family: 'Sitara', Arial, sans-serif;
@@ -195,6 +191,8 @@
           background-color: #EFE4E4;
           color: #343846;
           padding: 10px;
+          display: flex;
+          flex-direction: column;
 
           .timestamp {
             font-size: 0.8em;
@@ -202,17 +200,14 @@
           }
         }
         .message-block-send-wrapper{
-
           display: flex;
-          //width: 100%;
+          width: 100%;
           justify-content: flex-end;
+          flex-direction: column;
 
           .message-block-send {
             max-width: 230px;
-          //min-width: 35px;
             width: fit-content;
-
-            //height: 80px;
             margin: 10px;
             border-radius: 5px;
             font-family: 'Sitara', Arial, sans-serif;
@@ -220,6 +215,8 @@
             font-size: 13px;
             background-color: #4e525f;
             padding: 10px;
+            //flex-direction: column;
+            align-self: flex-end;
 
             .timestamp {
               font-size: 0.8em;
@@ -228,6 +225,18 @@
           }
         }
       }
+      /* Скрытие скроллбара */
+      // .chat-area::-webkit-scrollbar {
+      //   width: 0.5em; /* Ширина скроллбара */
+      // }
+
+      // .chat-area::-webkit-scrollbar-track {
+      //   background-color: transparent; /* Цвет фона скроллбара */
+      // }
+
+      // .chat-area::-webkit-scrollbar-thumb {
+      //   background-color: transparent; /* Цвет скроллбара */
+      // }
 
       .message-field {
         width: 410px;
