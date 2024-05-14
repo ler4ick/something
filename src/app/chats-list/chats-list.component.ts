@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ChatService } from '../chat.service';
+import { TogglerService } from '../toggler.service';
 import { persons } from '../persons';
 import { Router } from '@angular/router';
 
@@ -10,8 +11,14 @@ import { Router } from '@angular/router';
 })
 export class ChatsListComponent {
   persons = [...persons];
-
-  constructor(private chatService: ChatService) { }
+  showChatList = true;
+  constructor(private chatService: ChatService,
+              private togglerService: TogglerService
+  ) {
+    this.togglerService.showChatList$.subscribe(showChatList => {
+      this.showChatList = showChatList;
+    });
+   }
   ngOnInit() {
     // Ваш код инициализации компонента
   }

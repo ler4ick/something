@@ -180,7 +180,7 @@
       .chat-area{
         height: 413px;
         overflow-y: auto; //скроллбар
-
+        overflow-x: hidden;
         .message-block-rec {
           max-width: 230px;
           width: fit-content;

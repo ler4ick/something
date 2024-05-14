@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { persons } from '../persons';
 import { ChatService } from '../chat.service';
+import { TogglerService } from '../toggler.service';
+import { ChatContainerComponent } from '../chat-container/chat-container.component';
+
 
 @Component({
   selector: 'app-top-bar',
@@ -13,7 +16,9 @@ export class TopBarComponent {
   name: string = 'Не';
   lastName: string = 'выбран';
 
-  constructor(private chatService: ChatService) { }
+  constructor(private chatService: ChatService,
+              private togglerService: TogglerService
+  ) {  }
 
   ngOnInit() {
     this.chatService.selectedChatId$.subscribe(chatId => {
@@ -33,6 +38,9 @@ export class TopBarComponent {
         this.name = '';
       }
     }
+  }
+  toggleChatList() {
+    this.togglerService.toggleChatList();
   }
 
 }
