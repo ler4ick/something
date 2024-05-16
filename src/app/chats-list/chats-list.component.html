@@ -1,13 +1,12 @@
 
 <div *ngIf="showChatList">
-  <!-- <a class="dialog" *ngFor="let person of persons" [title]="person.name + ' dialog'" (click)="onChatClick(person.id)" > -->
   <a class="dialog" *ngFor="let person of filteredPersons" [title]="person.name + ' dialog'" (click)="onChatClick(person.id)" >
     <div class="ava"></div>
     <div class="cont-col">
       <div class="name-dial"> {{ person.name + ' ' + person.lastname }} </div>
       <div class="text">хочется пирожных</div>
       <div class="zakrep"></div>
-      <div class="time-rec-sen">20:30</div>
+      <div class="time-rec-sen"> {{lastMessageTimestamp}}</div>
     </div>
   </a>
 </div>

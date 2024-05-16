@@ -1,15 +1,17 @@
 <!-- <div class="chat-area" *ngIf="dialogId"> -->
 <div class="chat-area">
-  <div class="message-block-send-wrapper">
-    <div *ngFor="let message of messages" class="message-block-send">
+  <div *ngFor="let message of messages let i = index" class="message-container">
+    <div class="message">
 
       {{ message }}
+
     </div>
+    <span class="timestamp">{{ timestamps[i] }}</span>
   </div>
-
-    <div *ngFor="let message of messages" class="message-block-rec">
-      {{ message }}
-    </div>
+  <!-- <div class="message-container user-message">
+    <div class="message user-message">Сообщение от пользователя</div>
+    <span class="timestamp user-message">20:34</span>
+  </div> -->
 
 </div>
 

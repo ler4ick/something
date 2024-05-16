@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ChatService } from '../chat.service';
+import { TimestampsService } from '../timestamps.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,7 +12,10 @@ export class ChatCurrentComponent {
 
   selectedChatId: number = 1;
 
-  constructor(private chatService: ChatService) { }
+  constructor(private chatService: ChatService,
+    private timestampsService: TimestampsService
+
+  ) { }
 
   ngOnInit() {
     this.chatService.selectedChatId$.subscribe(id => {
@@ -27,13 +31,24 @@ export class ChatCurrentComponent {
 
   newMessage: string = '';
   messages: string[] = [];
+  timestamps: string[] = [];
+
+  @Output() messageSent = new EventEmitter<string>();
+
 
   sendMessage() {
     if (this.newMessage) {
       this.messages.push(this.newMessage);
+      const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      this.timestamps.push(timestamp);
+      //this.newMessage = '';
+      //this.lastMessageTimestamp.emit(timestamp); //чтобы отправлять время в другой компонент
+      //this.messageSent.emit(timestamp);
+      this.timestampsService.setLastMessageTimestamp(timestamp);
       this.newMessage = '';
     }
   }
+
 
 
 }

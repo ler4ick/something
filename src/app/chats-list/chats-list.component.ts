@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
 import { TogglerService } from '../toggler.service';
+import { TimestampsService } from '../timestamps.service';
 import { SearchFilterService } from '../search-filter.service';
 import { Person, persons } from '../persons';
 import { Router } from '@angular/router';
@@ -13,9 +14,14 @@ import { Router } from '@angular/router';
 export class ChatsListComponent {
   persons = [...persons];
   showChatList = true;
+
+  lastMessageTimestamp: string = '';
+
   constructor(private chatService: ChatService,
+              private timestampsService: TimestampsService,
               private togglerService: TogglerService,
-              private searchFilterService: SearchFilterService
+              private searchFilterService: SearchFilterService,
+
   ) {
     this.togglerService.showChatList$.subscribe(showChatList => {
       this.showChatList = showChatList;
@@ -25,9 +31,11 @@ export class ChatsListComponent {
       this.searchQuery = query;
       this.filterPersons();
     });
-   }
+  }
+
+
   ngOnInit() {
-    // Ваш код инициализации компонента
+
   }
 
   onChatClick(id: number) {
@@ -43,4 +51,10 @@ export class ChatsListComponent {
       person.lastname.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
   }
+
+  updateLastMessageTimestamp(timestamp: string) {
+    this.lastMessageTimestamp = timestamp;
+  }
+
+
 }
