@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
+import { ChatsListComponent } from '../chats-list/chats-list.component';
 @Component({
   selector: 'app-chat-container',
   templateUrl: './chat-container.component.html',
@@ -16,4 +17,5 @@ export class ChatContainerComponent {
   toggleChatList() {
     this.showChatList = !this.showChatList;
   }
+
 }

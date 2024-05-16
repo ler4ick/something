@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { persons } from '../persons';
 import { ChatService } from '../chat.service';
+import { SearchFilterService } from '../search-filter.service';
 import { TogglerService } from '../toggler.service';
 import { ChatContainerComponent } from '../chat-container/chat-container.component';
 
@@ -17,7 +18,8 @@ export class TopBarComponent {
   lastName: string = 'выбран';
 
   constructor(private chatService: ChatService,
-              private togglerService: TogglerService
+              private togglerService: TogglerService,
+              private searchFilterService: SearchFilterService
   ) {  }
 
   ngOnInit() {
@@ -41,6 +43,13 @@ export class TopBarComponent {
   }
   toggleChatList() {
     this.togglerService.toggleChatList();
+  }
+
+  //@Output() searchTermChanged = new EventEmitter<string>();
+  searchQuery: string = '';
+
+  onSearchInputChange() {
+    this.searchFilterService.updateSearchQuery(this.searchQuery);
   }
 
 }

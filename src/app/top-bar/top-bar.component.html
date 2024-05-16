@@ -1,7 +1,8 @@
 <div class="burger-icon" (click)="toggleChatList()"></div>
 <div class="search-container">
   <div class="lupa"></div>
-  <div class="search">Поиск</div>
+  <input type="text" [(ngModel)]="searchQuery" (input)="onSearchInputChange()" placeholder="Поиск">
+  <!-- <input class="search" type="text" (input)="onSearchTermChanged($event.target.value)" /> -->
 </div>
 <div class="name-container">
   <div class="FIO">{{ name }} {{ lastName }} </div>
