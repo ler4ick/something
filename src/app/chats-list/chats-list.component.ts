@@ -35,7 +35,9 @@ export class ChatsListComponent {
 
 
   ngOnInit() {
-
+    this.timestampsService.lastMessageTimestamp$.subscribe(timestamp => {
+      this.lastMessageTimestamp = timestamp;
+    });
   }
 
   onChatClick(id: number) {

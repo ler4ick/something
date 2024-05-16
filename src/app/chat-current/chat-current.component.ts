@@ -40,11 +40,12 @@ export class ChatCurrentComponent {
     if (this.newMessage) {
       this.messages.push(this.newMessage);
       const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      this.timestamps.push(timestamp);
+
       //this.newMessage = '';
       //this.lastMessageTimestamp.emit(timestamp); //чтобы отправлять время в другой компонент
       //this.messageSent.emit(timestamp);
       this.timestampsService.setLastMessageTimestamp(timestamp);
+      this.timestamps.push(timestamp);
       this.newMessage = '';
     }
   }

@@ -11,7 +11,7 @@ describe('ChatsListComponent', () => {
       declarations: [ChatsListComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ChatsListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
