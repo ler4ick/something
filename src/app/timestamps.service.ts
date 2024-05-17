@@ -10,7 +10,14 @@ export class TimestampsService {
   private lastMessageTimestampSubject = new BehaviorSubject<string>('');
   lastMessageTimestamp$ = this.lastMessageTimestampSubject.asObservable();
 
+  private lastMessageSubject = new BehaviorSubject<string>('');
+  lastMessage$ = this.lastMessageSubject.asObservable();
+
   setLastMessageTimestamp(timestamp: string) {
     this.lastMessageTimestampSubject.next(timestamp);
+  }
+
+  setLastMessage(lastmess: string) {
+    this.lastMessageSubject.next(lastmess);
   }
 }

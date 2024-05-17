@@ -13,7 +13,7 @@ export class ChatCurrentComponent {
   selectedChatId: number = 1;
 
   constructor(private chatService: ChatService,
-    private timestampsService: TimestampsService
+              private timestampsService: TimestampsService
 
   ) { }
 
@@ -41,10 +41,8 @@ export class ChatCurrentComponent {
       this.messages.push(this.newMessage);
       const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-      //this.newMessage = '';
-      //this.lastMessageTimestamp.emit(timestamp); //чтобы отправлять время в другой компонент
-      //this.messageSent.emit(timestamp);
       this.timestampsService.setLastMessageTimestamp(timestamp);
+      this.timestampsService.setLastMessage(this.newMessage);
       this.timestamps.push(timestamp);
       this.newMessage = '';
     }

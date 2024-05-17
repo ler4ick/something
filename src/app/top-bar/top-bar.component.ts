@@ -45,7 +45,6 @@ export class TopBarComponent {
     this.togglerService.toggleChatList();
   }
 
-  //@Output() searchTermChanged = new EventEmitter<string>();
   searchQuery: string = '';
 
   onSearchInputChange() {

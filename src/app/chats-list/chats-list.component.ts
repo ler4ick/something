@@ -16,6 +16,7 @@ export class ChatsListComponent {
   showChatList = true;
 
   lastMessageTimestamp: string = '';
+  lastMessage: string = '';
 
   constructor(private chatService: ChatService,
               private timestampsService: TimestampsService,
@@ -33,10 +34,12 @@ export class ChatsListComponent {
     });
   }
 
-
   ngOnInit() {
     this.timestampsService.lastMessageTimestamp$.subscribe(timestamp => {
       this.lastMessageTimestamp = timestamp;
+    });
+    this.timestampsService.lastMessage$.subscribe(lastmess => {
+      this.lastMessage = lastmess;
     });
   }
 
