@@ -8,21 +8,21 @@ export interface Person {
 
 export const persons = [
   {
-    id: 1,
+    id: 2,
     name: 'Michael',
     lastname: 'Jackson',
     organization: 'Microsoft',
     photo: 'string'
   },
   {
-    id: 2,
+    id: 3,
     name: 'David',
     lastname: 'Bowie',
     organization: 'Apple',
     photo: 'string'
   },
   {
-    id: 3,
+    id: 4,
     name: 'Igor',
     lastname: 'Lysenko',
     organization: 'JoyDev',
