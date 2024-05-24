@@ -56,16 +56,5 @@ export class TopBarComponent {
     this.searchFilterService.updateSearchQuery(this.searchQuery);
   }
 
-  filteredRooms(): Room[] {
-    return this.rooms.filter((room) => {
-      const user = this.chatService.getUserById(room.id_person_2);
-      if (user) {
-        const fullName = `${user.name} ${user.lastname}`.toLowerCase();
-        return fullName.includes(this.searchQuery.toLowerCase());
-      }
-      return false;
-    });
-  }
-
 
 }

@@ -10,12 +10,18 @@
 </div> -->
 
 <div class="chat-area">
-  {{ currentRoom?.id }}
+  <!-- {{ currentRoom?.id }} -->
   <div *ngFor="let message of currentRoom?.messages" class="message-container">
     <div class="message">
       {{ message.content }}
     </div>
     <span class="timestamp">{{ message.date }}</span>
+  </div>
+  <div *ngFor="let message of currentRoom?.messages" class="message-container user-message">
+    <div class="message user-message">
+      {{ message.content }}
+    </div>
+    <span class="timestamp user-message">{{ message.date }}</span>
   </div>
 </div>
 
