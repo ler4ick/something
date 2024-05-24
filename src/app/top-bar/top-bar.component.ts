@@ -14,8 +14,9 @@ import { ChatContainerComponent } from '../chat-container/chat-container.compone
 export class TopBarComponent {
 
   selectedChatId: number | null = null;
-  name: string = 'Не';
-  lastName: string = 'выбран';
+  @Input() name: string = 'Не';
+  @Input() lastName: string = 'выбран';
+
 
   constructor(private chatService: ChatService,
               private togglerService: TogglerService,
@@ -41,6 +42,7 @@ export class TopBarComponent {
       }
     }
   }
+
   toggleChatList() {
     this.togglerService.toggleChatList();
   }
@@ -50,5 +52,6 @@ export class TopBarComponent {
   onSearchInputChange() {
     this.searchFilterService.updateSearchQuery(this.searchQuery);
   }
+
 
 }

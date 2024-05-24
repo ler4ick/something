@@ -1,8 +1,8 @@
 
-<app-top-bar></app-top-bar>
+<app-top-bar [name]="selectedUserName" [lastName]="selectedUserLastname"></app-top-bar>
 <div class="content">
   <div >
-    <app-chats-list></app-chats-list>
+    <app-chats-list (userNameChanged)="onUserNameChanged($event)"></app-chats-list>
   </div>
   <div >
     <app-chat-current></app-chat-current>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
 import { TogglerService } from '../toggler.service';
 import { TimestampsService } from '../timestamps.service';
@@ -19,6 +19,8 @@ export class ChatsListComponent {
 
   lastMessageTimestamp: string = '';
   lastMessage: string = '';
+
+  @Output() userNameChanged = new EventEmitter<{ name: string, lastName: string }>();
 
   constructor(private chatService: ChatService,
               private timestampsService: TimestampsService,
@@ -45,9 +47,16 @@ export class ChatsListComponent {
     });
   }
 
-  onChatClick(id: number) {
+  onChatClick(roomId: number) {
     //this.chatService.setSelectedChatId(id);
-    this.chatService.setCurrentRoom(id);
+    const room = this.rooms.find(r => r.id === roomId);
+    if (room) {
+      const user = this.chatService.getUserById(room.id_person_2);
+      if (user) {
+        this.userNameChanged.emit({ name: user.name, lastName: user.lastname });
+      }
+    }
+    this.chatService.setCurrentRoom(roomId);
   }
 
   searchQuery: string = '';
