@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { persons } from '../persons';
+import { Room, rooms } from '../rooms';
 import { ChatService } from '../chat.service';
 import { SearchFilterService } from '../search-filter.service';
 import { TogglerService } from '../toggler.service';
@@ -14,6 +14,7 @@ import { ChatContainerComponent } from '../chat-container/chat-container.compone
 export class TopBarComponent {
 
   selectedChatId: number | null = null;
+  rooms = [...rooms];
   @Input() name: string = 'Не';
   @Input() lastName: string = 'выбран';
 
@@ -21,7 +22,9 @@ export class TopBarComponent {
   constructor(private chatService: ChatService,
               private togglerService: TogglerService,
               private searchFilterService: SearchFilterService
-  ) {  }
+  ) { this.searchFilterService.searchQuery$.subscribe((query) => {
+    this.searchQuery = query;
+  }); }
 
   ngOnInit() {
     // this.chatService.selectedChatId$.subscribe(chatId => {
@@ -30,18 +33,18 @@ export class TopBarComponent {
     // });
   }
 
-  loadUserName() {
-    if (this.selectedChatId !== null) {
-      const user = persons.find(person => person.id === this.selectedChatId);
-      if (user) {
-        this.lastName = user.lastname;
-        this.name = user.name;
-      } else {
-        this.lastName = '';
-        this.name = '';
-      }
-    }
-  }
+  // loadUserName() {
+  //   if (this.selectedChatId !== null) {
+  //     const user = persons.find(person => person.id === this.selectedChatId);
+  //     if (user) {
+  //       this.lastName = user.lastname;
+  //       this.name = user.name;
+  //     } else {
+  //       this.lastName = '';
+  //       this.name = '';
+  //     }
+  //   }
+  // }
 
   toggleChatList() {
     this.togglerService.toggleChatList();
@@ -51,6 +54,17 @@ export class TopBarComponent {
 
   onSearchInputChange() {
     this.searchFilterService.updateSearchQuery(this.searchQuery);
+  }
+
+  filteredRooms(): Room[] {
+    return this.rooms.filter((room) => {
+      const user = this.chatService.getUserById(room.id_person_2);
+      if (user) {
+        const fullName = `${user.name} ${user.lastname}`.toLowerCase();
+        return fullName.includes(this.searchQuery.toLowerCase());
+      }
+      return false;
+    });
   }
 
 

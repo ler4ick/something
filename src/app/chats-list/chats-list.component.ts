@@ -5,6 +5,7 @@ import { TimestampsService } from '../timestamps.service';
 import { SearchFilterService } from '../search-filter.service';
 import { Person, persons } from '../persons';
 import { Room, rooms } from '../rooms';
+import { Message } from '../messages';
 import { Router } from '@angular/router';
 
 @Component({
@@ -32,9 +33,9 @@ export class ChatsListComponent {
       this.showChatList = showChatList;
     });
 
-    this.searchFilterService.searchQuery$.subscribe(query => {
+    this.searchFilterService.searchQuery$.subscribe((query) => {
       this.searchQuery = query;
-      this.filterPersons();
+      //this.filteredRooms();
     });
   }
 
@@ -62,11 +63,22 @@ export class ChatsListComponent {
   searchQuery: string = '';
   filteredPersons: Person[] = [];
 
-  filterPersons() {
-    this.filteredPersons = persons.filter(person =>
-      person.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      person.lastname.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
+  // filterPersons() {
+  //   this.filteredPersons = persons.filter(person =>
+  //     person.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+  //     person.lastname.toLowerCase().includes(this.searchQuery.toLowerCase())
+  //   );
+  // }
+
+  filteredRooms(): Room[] {
+    return this.rooms.filter((room) => {
+      const user = this.chatService.getUserById(room.id_person_2);
+      if (user) {
+        const fullName = `${user.name} ${user.lastname}`.toLowerCase();
+        return fullName.includes(this.searchQuery.toLowerCase());
+      }
+      return false;
+    });
   }
 
   updateLastMessageTimestamp(timestamp: string) {
@@ -76,6 +88,10 @@ export class ChatsListComponent {
   getPersonNameFromRoom(room: Room): string {
     const user = this.chatService.getUserById(room.id_person_2);
     return user ? `${user.name} ${user.lastname}` : '';
+  }
+
+  getLastMessageFromRoom(room: Room): Message | undefined {
+    return room.messages.length > 0 ? room.messages[room.messages.length - 1] : undefined;
   }
 
 }

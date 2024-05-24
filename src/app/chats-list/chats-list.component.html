@@ -9,14 +9,14 @@
       <div class="time-rec-sen"> {{ lastMessageTimestamp }}</div>
     </div>
   </a> -->
-  <a class="dialog" *ngFor="let room of rooms" [title]="room.id + ' dialog'" (click)="onChatClick(room.id)" >
+  <a class="dialog" *ngFor="let room of filteredRooms()" [title]="room.id + ' dialog'" (click)="onChatClick(room.id)" >
     <div class="ava"></div>
     <div class="cont-col">
       <!-- <div class="name-dial"> {{ person.name + ' ' + person.lastname }} </div> -->
       <div class="name-dial"> {{ getPersonNameFromRoom(room) }} </div>
-      <div class="text">{{ lastMessage }}</div>
+      <div class="text" *ngIf="getLastMessageFromRoom(room)">{{ getLastMessageFromRoom(room)?.content }}</div>
       <div class="zakrep"></div>
-      <div class="time-rec-sen"> {{ lastMessageTimestamp }}</div>
+      <div class="time-rec-sen" *ngIf="getLastMessageFromRoom(room)"> {{ getLastMessageFromRoom(room)?.date }}</div>
     </div>
   </a>
 </div>
