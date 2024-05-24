@@ -62,7 +62,7 @@ export class ChatCurrentComponent {
         id: this.currentRoom.messages.length + 1,
         id_creator: 1, // assuming the current user has id 1
         id_room: this.currentRoom.id,
-        date: new Date().toLocaleString(),
+        date: new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' }),
         content: this.newMessage
       };
       this.chatService.sendMessage(message);
@@ -71,7 +71,4 @@ export class ChatCurrentComponent {
       this.newMessage = '';
     }
   }
-
-
-
 }

@@ -3,12 +3,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Room, rooms } from './rooms';
 import { Message } from './messages';
+import { Person, persons } from './persons';
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   constructor() { }
   rooms = [...rooms];
+  persons = [...persons];
 
   private currentRoomSubject = new BehaviorSubject<Room | null>(null);
   currentRoom$: Observable<Room | null> = this.currentRoomSubject.asObservable();
@@ -30,6 +32,10 @@ export class ChatService {
     const index = this.rooms.findIndex(r => r.id === room.id);
     this.rooms[index] = { ...room };
     this.currentRoomSubject.next({ ...this.rooms[index] });
+  }
+
+  getUserById(id: number): Person | undefined {
+    return this.persons.find(person => person.id === id);
   }
 
   // private selectedChatIdSubject: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);

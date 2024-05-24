@@ -64,4 +64,9 @@ export class ChatsListComponent {
     this.lastMessageTimestamp = timestamp;
   }
 
+  getPersonNameFromRoom(room: Room): string {
+    const user = this.chatService.getUserById(room.id_person_2);
+    return user ? `${user.name} ${user.lastname}` : '';
+  }
+
 }
