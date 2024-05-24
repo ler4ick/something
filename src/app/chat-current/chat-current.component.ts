@@ -42,20 +42,6 @@ export class ChatCurrentComponent {
 
   @Output() messageSent = new EventEmitter<string>();
 
-
-  // sendMessage() {
-  //   if (this.newMessage) {
-  //     this.messages.push(this.newMessage);
-  //     const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-  //     //вот эти двое отправляют в список чатов последнее сообщение и его метку времени
-  //     this.timestampsService.setLastMessageTimestamp(timestamp);
-  //     this.timestampsService.setLastMessage(this.newMessage);
-  //     this.timestamps.push(timestamp);  //постится временная метка в current-chat
-  //     this.newMessage = '';  //очистка поля после отправки сообщения
-  //   }
-  // }
-
   sendMessage() {
     if (this.newMessage && this.currentRoom) {
       const message: Message = {
@@ -70,5 +56,39 @@ export class ChatCurrentComponent {
       this.timestampsService.setLastMessage(message.content);
       this.newMessage = '';
     }
+  }
+
+  showMenu = false;
+  selectedMessage: Message | undefined = undefined;
+  contextMenuPosition = { x: 0, y: 0 };
+
+  showContextMenu(event: MouseEvent, message: Message) {
+    event.preventDefault();
+    this.selectedMessage = message;
+    this.contextMenuPosition = { x: event.clientX, y: event.clientY };
+    this.showMenu = true;
+  }
+
+  hideContextMenu() {
+    this.showMenu = false;
+  }
+
+  deleteMessage(message: Message) {
+    // Логика для удаления сообщения
+    if (this.currentRoom) {
+      this.currentRoom.messages = this.currentRoom.messages.filter(msg => msg !== message);
+    }
+    this.hideContextMenu();
+  }
+
+  editMessage(message: Message) {
+    // Логика для редактирования сообщения
+    if (this.currentRoom) {
+      const newContent = prompt("Введите новый текст сообщения:", message.content);
+      if (newContent !== null) {
+        message.content = newContent;
+      }
+    }
+    this.hideContextMenu();
   }
 }
