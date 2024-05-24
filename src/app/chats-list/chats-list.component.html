@@ -1,9 +1,19 @@
 
 <div *ngIf="showChatList">
-  <a class="dialog" *ngFor="let person of filteredPersons" [title]="person.name + ' dialog'" (click)="onChatClick(person.id)" >
+  <!-- <a class="dialog" *ngFor="let person of filteredPersons" [title]="person.name + ' dialog'" (click)="onChatClick(person.id)" >
     <div class="ava"></div>
     <div class="cont-col">
       <div class="name-dial"> {{ person.name + ' ' + person.lastname }} </div>
+      <div class="text">{{ lastMessage }}</div>
+      <div class="zakrep"></div>
+      <div class="time-rec-sen"> {{ lastMessageTimestamp }}</div>
+    </div>
+  </a> -->
+  <a class="dialog" *ngFor="let room of rooms" [title]="room.id + ' dialog'" (click)="onChatClick(room.id)" >
+    <div class="ava"></div>
+    <div class="cont-col">
+      <!-- <div class="name-dial"> {{ person.name + ' ' + person.lastname }} </div> -->
+      <div class="name-dial"> {{ room.id_person_2 }} </div>
       <div class="text">{{ lastMessage }}</div>
       <div class="zakrep"></div>
       <div class="time-rec-sen"> {{ lastMessageTimestamp }}</div>

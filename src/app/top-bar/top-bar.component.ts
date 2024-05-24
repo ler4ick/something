@@ -23,10 +23,10 @@ export class TopBarComponent {
   ) {  }
 
   ngOnInit() {
-    this.chatService.selectedChatId$.subscribe(chatId => {
-      this.selectedChatId = chatId;
-      this.loadUserName();
-    });
+    // this.chatService.selectedChatId$.subscribe(chatId => {
+    //   this.selectedChatId = chatId;
+    //   this.loadUserName();
+    // });
   }
 
   loadUserName() {

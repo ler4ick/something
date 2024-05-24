@@ -4,6 +4,7 @@ import { TogglerService } from '../toggler.service';
 import { TimestampsService } from '../timestamps.service';
 import { SearchFilterService } from '../search-filter.service';
 import { Person, persons } from '../persons';
+import { Room, rooms } from '../rooms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +13,8 @@ import { Router } from '@angular/router';
   styleUrl: './chats-list.component.scss'
 })
 export class ChatsListComponent {
-  persons = [...persons];
+  //persons = [...persons];
+  rooms = [...rooms];
   showChatList = true;
 
   lastMessageTimestamp: string = '';
@@ -44,7 +46,8 @@ export class ChatsListComponent {
   }
 
   onChatClick(id: number) {
-    this.chatService.setSelectedChatId(id);
+    //this.chatService.setSelectedChatId(id);
+    this.chatService.setCurrentRoom(id);
   }
 
   searchQuery: string = '';
@@ -60,6 +63,5 @@ export class ChatsListComponent {
   updateLastMessageTimestamp(timestamp: string) {
     this.lastMessageTimestamp = timestamp;
   }
-
 
 }
