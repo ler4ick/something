@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
+import { AuthService } from '../auth.service';
 import { TogglerService } from '../toggler.service';
 import { TimestampsService } from '../timestamps.service';
 import { SearchFilterService } from '../search-filter.service';
@@ -27,6 +28,7 @@ export class ChatsListComponent {
               private timestampsService: TimestampsService,
               private togglerService: TogglerService,
               private searchFilterService: SearchFilterService,
+
 
   ) {
     this.togglerService.showChatList$.subscribe(showChatList => {
@@ -93,5 +95,6 @@ export class ChatsListComponent {
   getLastMessageFromRoom(room: Room): Message | undefined {
     return room.messages.length > 0 ? room.messages[room.messages.length - 1] : undefined;
   }
+
 
 }

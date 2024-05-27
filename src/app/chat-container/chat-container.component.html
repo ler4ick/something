@@ -1,11 +1,17 @@
-
-<app-top-bar [name]="selectedUserName" [lastName]="selectedUserLastname"></app-top-bar>
-<div class="content">
-  <div >
-    <app-chats-list (userNameChanged)="onUserNameChanged($event)"></app-chats-list>
-  </div>
-  <div >
-    <app-chat-current></app-chat-current>
-  </div>
+<div *ngIf="!isLoggedIn">
+  <label for="id">Username:</label>
+  <input type="text" id="id" [(ngModel)]="id">
+  <button (click)="login()">Log In</button>
 </div>
 
+<div *ngIf="isLoggedIn">
+  <app-top-bar [name]="selectedUserName" [lastName]="selectedUserLastname"></app-top-bar>
+  <div class="content">
+    <div >
+      <app-chats-list (userNameChanged)="onUserNameChanged($event)"></app-chats-list>
+    </div>
+    <div >
+      <app-chat-current></app-chat-current>
+    </div>
+  </div>
+</div>
