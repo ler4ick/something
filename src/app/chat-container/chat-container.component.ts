@@ -26,12 +26,10 @@ export class ChatContainerComponent {
     this.selectedUserLastname = event.lastName;
   }
 
-  id: string = '';
+  id: number = 0;
   isLoggedIn: boolean = false;
-
-
-  login() {
-    this.isLoggedIn = this.authService.login(this.id);
+  async login() {
+    this.isLoggedIn = await this.authService.login(this.id);
   }
 
 }

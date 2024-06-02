@@ -10,10 +10,10 @@
 </div> -->
 
 <div class="chat-area">
-  <!-- {{ currentRoom?.id }} -->
   <div *ngFor="let message of currentRoom?.messages" class="message-container" (contextmenu)="showContextMenu($event, message)">
     <div class="message" >
-      {{ message.content }}
+      <!-- {{ message.content }} -->
+      {{ message }}
     </div>
     <span class="timestamp">{{ message.date }}</span>
     <div *ngIf="showMenu && selectedMessage === message" class="context-menu" [style.left.px]="contextMenuPosition.x" [style.top.px]="contextMenuPosition.y">
@@ -37,7 +37,7 @@
   </div>
 
   <div class="text-area">
-    <textarea [(ngModel)]="newMessage" placeholder="Введите сообщение..."></textarea>
+    <textarea [(ngModel)]="message" placeholder="Введите сообщение..."></textarea>
   </div>
   <div class="emoji">
   </div>

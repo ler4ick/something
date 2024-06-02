@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Room } from '../rooms';
 import { Message } from '../messages';
 import { ChatApiService } from '../chat-api.service';
+import { SocketsService } from '../sockets.service';
 import { tap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 @Component({
@@ -12,18 +13,21 @@ import { throwError } from 'rxjs';
   templateUrl: './chat-current.component.html',
   styleUrl: './chat-current.component.scss'
 })
-export class ChatCurrentComponent {
+export class ChatCurrentComponent implements OnInit {
+  message: string =''; //тестовое
   newMessage: string = '';
+  messages_test: string[] = []; //тестовое
   messages: Message[] = [];
   timestamps: string[] = [];
   selectedChatId: number = 1;
   currentRoom: Room | null = null;
 
   constructor(private chatService: ChatService,
+              private socketsService: SocketsService,
               private chatApiService: ChatApiService,
               private timestampsService: TimestampsService
 
-  ) { this.loadMessages(); }
+  ) { }
 
   // ngOnInit() {
   //   this.chatService.selectedChatId$.subscribe(id => {
@@ -37,76 +41,64 @@ export class ChatCurrentComponent {
   //   });
   // }
 
-  loadMessages() {
-    this.chatApiService.getMessages().subscribe(msgs => {
-      this.messages = msgs;
-    });
-  }
+  // loadMessages() {
+  //   this.socketsService.getMessages().subscribe(msg => {
+  //     this.messages_test.push(msg);
+  //   });
+  // }
 
   ngOnInit() {
     this.chatService.currentRoom$.subscribe(room => {
       this.currentRoom = room;
     });
+    this.socketsService.getMessages().subscribe((message: string) => {
+      this.messages_test.push(message);
+      console.log(message);
+
+    });
   }
 
   @Output() messageSent = new EventEmitter<string>();
+
+  sendMessage(){
+    console.log(this.message);
+    this.socketsService.sendMessage(this.message);
+    this.message = '';
+  }
 
   // sendMessage() {
   //   if (this.newMessage && this.currentRoom) {
   //     const message: Message = {
   //       id: this.currentRoom.messages.length + 1,
-  //       id_creator: 1, // assuming the current user has id 1
+  //       id_creator: 1,
   //       id_room: this.currentRoom.id,
   //       date: new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' }),
   //       content: this.newMessage
   //     };
-  //     this.chatService.sendMessage(message);
-  //     this.timestampsService.setLastMessageTimestamp(message.date);
-  //     this.timestampsService.setLastMessage(message.content);
-  //     this.newMessage = '';
+  //     console.log(message);
+  //     this.chatApiService.sendMessage(message)
+  //       .pipe(
+  //         tap(() => {
+  //           this.timestampsService.setLastMessageTimestamp(message.date);
+  //           this.timestampsService.setLastMessage(message.content);
+  //           this.newMessage = '';
+  //         }),
+  //         catchError((error) => {
+  //           console.error('УАААА:', error);
+  //           return throwError(() => error); // Используйте новый синтаксис
+  //         })
+  //       )
+  //       .subscribe({
+  //         next: () => {
+  //           console.log('Ушло успещно:');
+  //         },
+  //         error: (error) => {
+  //           // Добавьте здесь логику обработки ошибок
+  //           console.error('Ошибка отправки сообщения:', error);
+  //         }
+  //       });
   //   }
   // }
-
-  // sendMessage() {
-  //   this.chatApiService.sendMessage(this.newMessage).subscribe(() => {
-  //     this.newMessage = '';
-  //     this.loadMessages();
-  //   });
-  // }
-
-  sendMessage() {
-    if (this.newMessage && this.currentRoom) {
-      const message: Message = {
-        id: this.currentRoom.messages.length + 1,
-        id_creator: 1,
-        id_room: this.currentRoom.id,
-        date: new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' }),
-        content: this.newMessage
-      };
-      console.log(message);
-      this.chatApiService.sendMessage(message)
-        .pipe(
-          tap(() => {
-            this.timestampsService.setLastMessageTimestamp(message.date);
-            this.timestampsService.setLastMessage(message.content);
-            this.newMessage = '';
-          }),
-          catchError((error) => {
-            console.error('УАААА:', error);
-            return throwError(() => error); // Используйте новый синтаксис
-          })
-        )
-        .subscribe({
-          next: () => {
-            console.log('Ушло успещно:');
-          },
-          error: (error) => {
-            // Добавьте здесь логику обработки ошибок
-            console.error('Ошибка отправки сообщения:', error);
-          }
-        });
-    }
-  }
 
   showMenu = false;
   selectedMessage: Message | undefined = undefined;

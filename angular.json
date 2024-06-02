@@ -72,7 +72,8 @@
               "buildTarget": "chat2:build:production"
             },
             "development": {
-              "buildTarget": "chat2:build:development"
+              "buildTarget": "chat2:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
