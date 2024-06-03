@@ -63,13 +63,15 @@ export class ChatCurrentComponent implements OnInit {
       const message: Message = {
         id_creator: 1,
         id_room: this.currentRoom.id,
-        date: new Date().toLocaleString([], {
+        timestamp: new Date().toLocaleString([], {
           hour: '2-digit',
           minute: '2-digit',
         }),
         content: this.newMessage,
       };
       this.socketsService.sendMessage(message);
+      this.timestampsService.setLastMessageTimestamp(message.timestamp); //не пашет
+      this.timestampsService.setLastMessage(message.content);
       this.newMessage = '';
       console.log(message);
     }

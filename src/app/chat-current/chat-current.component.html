@@ -14,7 +14,7 @@
     <div class="message" >
       {{ message.content }}
     </div>
-    <span class="timestamp">{{ message.date }}</span>
+    <span class="timestamp">{{ message.timestamp }}</span>
     <div *ngIf="showMenu && selectedMessage === message" class="context-menu" [style.left.px]="contextMenuPosition.x" [style.top.px]="contextMenuPosition.y">
       <ul>
         <li (click)="deleteMessage(message)">Удалить</li>
@@ -23,12 +23,12 @@
     </div>
 
   </div>
-  <!-- <div *ngFor="let message of currentRoom?.messages" class="message-container user-message">
+  <div *ngFor="let message of this.messages" class="message-container user-message">
     <div class="message user-message">
       {{ message.content }}
     </div>
-    <span class="timestamp user-message">{{ message.date }}</span>
-  </div> -->
+    <span class="timestamp user-message">{{ message.timestamp }}</span>
+  </div>
 </div>
 
 <div class="message-field">

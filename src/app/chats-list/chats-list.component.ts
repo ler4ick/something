@@ -28,8 +28,6 @@ export class ChatsListComponent {
               private timestampsService: TimestampsService,
               private togglerService: TogglerService,
               private searchFilterService: SearchFilterService,
-
-
   ) {
     this.togglerService.showChatList$.subscribe(showChatList => {
       this.showChatList = showChatList;

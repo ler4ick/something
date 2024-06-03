@@ -6,7 +6,7 @@
       <div class="name-dial"> {{ getPersonNameFromRoom(room) }} </div>
       <div class="text" *ngIf="getLastMessageFromRoom(room)">{{ getLastMessageFromRoom(room)?.content }}</div>
       <div class="zakrep"></div>
-      <div class="time-rec-sen" *ngIf="getLastMessageFromRoom(room)"> {{ getLastMessageFromRoom(room)?.date }}</div>
+      <div class="time-rec-sen" *ngIf="getLastMessageFromRoom(room)"> {{ getLastMessageFromRoom(room)?.timestamp }}</div>
     </div>
   </a>
 </div>
