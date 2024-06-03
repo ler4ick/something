@@ -8,24 +8,38 @@ export interface Person {
 
 export const persons = [
   {
+    id: 1,
+    name: "John",
+    lastname: "Doe",
+    photo: "https://example.com/john-doe.jpg",
+    organization: "Acme Inc.",
+  },
+  {
     id: 2,
-    name: 'Michael',
-    lastname: 'Jackson',
-    organization: 'Microsoft',
-    photo: 'string'
+    name: "Jane",
+    lastname: "Smith",
+    photo: "https://example.com/jane-smith.jpg",
+    organization: "Globex Corporation",
   },
   {
     id: 3,
-    name: 'David',
-    lastname: 'Bowie',
-    organization: 'Apple',
-    photo: 'string'
+    name: "Bob",
+    lastname: "Johnson",
+    photo: "https://example.com/bob-johnson.jpg",
+    organization: "Stark Industries",
   },
   {
     id: 4,
-    name: 'Igor',
-    lastname: 'Lysenko',
-    organization: 'JoyDev',
-    photo: 'string'
-  }
+    name: "Alice",
+    lastname: "Williams",
+    photo: "https://example.com/alice-williams.jpg",
+    organization: "Wayne Enterprises",
+  },
+  {
+    id: 5,
+    name: "Tom",
+    lastname: "Davis",
+    photo: "https://example.com/tom-davis.jpg",
+    organization: "Oscorp",
+  },
 ];

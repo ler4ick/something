@@ -14,9 +14,9 @@ import { throwError } from 'rxjs';
   styleUrl: './chat-current.component.scss'
 })
 export class ChatCurrentComponent implements OnInit {
-  message: string =''; //тестовое
+  //message: string =''; //тестовое
   newMessage: string = '';
-  messages_test: string[] = []; //тестовое
+  //messages_test: string[] = []; //тестовое
   messages: Message[] = [];
   timestamps: string[] = [];
   selectedChatId: number = 1;
@@ -29,52 +29,49 @@ export class ChatCurrentComponent implements OnInit {
 
   ) { }
 
-  // ngOnInit() {
-  //   this.chatService.selectedChatId$.subscribe(id => {
-  //     if (id !== null) {
-  //       this.selectedChatId = id;
-  //     } else {
-  //       // Обработка случая, когда id равно null
-  //       // Например, можно присвоить переменной значение по умолчанию
-  //       this.selectedChatId = 0; // Или любое другое значение по умолчанию
-  //     }
-  //   });
-  // }
-
-  // loadMessages() {
-  //   this.socketsService.getMessages().subscribe(msg => {
-  //     this.messages_test.push(msg);
-  //   });
-  // }
-
   ngOnInit() {
     this.chatService.currentRoom$.subscribe(room => {
       this.currentRoom = room;
+      this.socketsService.sendRoomId(room?.id);
+      console.log(room?.id);
     });
-    this.socketsService.getMessages().subscribe((message: string) => {
-      this.messages_test.push(message);
+    this.socketsService.getMessages().subscribe((message: Message) => {
+      this.messages.push(message);
       console.log(message);
-
     });
   }
 
   @Output() messageSent = new EventEmitter<string>();
 
+  // sendMessage(){
+  //   console.log(this.message);
+  //   this.socketsService.sendMessage(this.message);
+  //   this.message = '';
+  // }
+
   sendMessage(){
-    console.log(this.message);
-    this.socketsService.sendMessage(this.message);
-    this.message = '';
+    if (this.newMessage && this.currentRoom) {
+      const message: Message = {
+        id_creator: 1,
+        id_room: this.currentRoom.id,
+        date: new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' }),
+        content: this.newMessage
+      };
+      this.socketsService.sendMessage(message);
+      this.newMessage = '';
+      console.log(message);
+    }
   }
 
   // sendMessage() {
-  //   if (this.newMessage && this.currentRoom) {
-  //     const message: Message = {
-  //       id: this.currentRoom.messages.length + 1,
-  //       id_creator: 1,
-  //       id_room: this.currentRoom.id,
-  //       date: new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' }),
-  //       content: this.newMessage
-  //     };
+    // if (this.newMessage && this.currentRoom) {
+    //   const message: Message = {
+    //     id: this.currentRoom.messages.length + 1,
+    //     id_creator: 1,
+    //     id_room: this.currentRoom.id,
+    //     date: new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' }),
+    //     content: this.newMessage
+    //   };
   //     console.log(message);
   //     this.chatApiService.sendMessage(message)
   //       .pipe(
