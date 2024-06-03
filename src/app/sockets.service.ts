@@ -26,8 +26,8 @@ export class SocketsService {
   }
 
   getMessages() {
-    let observable = new Observable<Message>(observer => {
-      this.socket.on('chat message', (msg: Message) => {
+    let observable = new Observable<Message[]>(observer => {
+      this.socket.on('room-messages', (msg: Message[]) => {
         observer.next(msg)
       })
 

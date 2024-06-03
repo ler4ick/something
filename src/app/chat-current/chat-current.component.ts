@@ -34,12 +34,16 @@ export class ChatCurrentComponent implements OnInit {
       this.currentRoom = room;
       this.socketsService.sendRoomId(room?.id);
       console.log(room?.id);
+      this.messages = [];
     });
-    this.socketsService.getMessages().subscribe((message: Message) => {
-      this.messages.push(message);
-      console.log(message);
+    this.socketsService.getMessages().subscribe((message: Message[]) => {
+      //this.messages.push(message);
+      this.messages = [...this.messages, ...message];
+      console.log(this.messages);
     });
+
   }
+
 
   @Output() messageSent = new EventEmitter<string>();
 

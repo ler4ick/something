@@ -10,10 +10,9 @@
 </div> -->
 
 <div class="chat-area">
-  <div *ngFor="let message of currentRoom?.messages" class="message-container" (contextmenu)="showContextMenu($event, message)">
+  <div *ngFor="let message of this.messages" class="message-container" (contextmenu)="showContextMenu($event, message)">
     <div class="message" >
-      <!-- {{ message.content }} -->
-      {{ message }}
+      {{ message.content }}
     </div>
     <span class="timestamp">{{ message.date }}</span>
     <div *ngIf="showMenu && selectedMessage === message" class="context-menu" [style.left.px]="contextMenuPosition.x" [style.top.px]="contextMenuPosition.y">
