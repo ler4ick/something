@@ -11,7 +11,7 @@ import { throwError } from 'rxjs';
 @Component({
   selector: 'app-chat-current',
   templateUrl: './chat-current.component.html',
-  styleUrl: './chat-current.component.scss'
+  styleUrl: './chat-current.component.scss',
 })
 export class ChatCurrentComponent implements OnInit {
   //message: string =''; //тестовое
@@ -22,28 +22,33 @@ export class ChatCurrentComponent implements OnInit {
   selectedChatId: number = 1;
   currentRoom: Room | null = null;
 
-  constructor(private chatService: ChatService,
-              private socketsService: SocketsService,
-              private chatApiService: ChatApiService,
-              private timestampsService: TimestampsService
-
-  ) { }
+  constructor(
+    private chatService: ChatService,
+    private socketsService: SocketsService,
+    private chatApiService: ChatApiService,
+    private timestampsService: TimestampsService
+  ) {}
 
   ngOnInit() {
-    this.chatService.currentRoom$.subscribe(room => {
-      this.currentRoom = room;
-      this.socketsService.sendRoomId(room?.id);
-      console.log(room?.id);
-      this.messages = [];
+    this.chatService.currentRoom$.subscribe((room) => {
+      if (room) {
+        this.currentRoom = room;
+        this.socketsService.sendRoomId(room?.id);
+        console.log(room?.id);
+        this.messages = [];
+      }
     });
+
+    this.socketsService.getMessage().subscribe((message: Message) => {
+      this.messages = [...this.messages, message];
+    });
+
     this.socketsService.getMessages().subscribe((message: Message[]) => {
       //this.messages.push(message);
-      this.messages = [...this.messages, ...message];
+      this.messages = [...message];
       console.log(this.messages);
     });
-
   }
-
 
   @Output() messageSent = new EventEmitter<string>();
 
@@ -53,13 +58,16 @@ export class ChatCurrentComponent implements OnInit {
   //   this.message = '';
   // }
 
-  sendMessage(){
+  sendMessage() {
     if (this.newMessage && this.currentRoom) {
       const message: Message = {
         id_creator: 1,
         id_room: this.currentRoom.id,
-        date: new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' }),
-        content: this.newMessage
+        date: new Date().toLocaleString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+        content: this.newMessage,
       };
       this.socketsService.sendMessage(message);
       this.newMessage = '';
@@ -68,14 +76,14 @@ export class ChatCurrentComponent implements OnInit {
   }
 
   // sendMessage() {
-    // if (this.newMessage && this.currentRoom) {
-    //   const message: Message = {
-    //     id: this.currentRoom.messages.length + 1,
-    //     id_creator: 1,
-    //     id_room: this.currentRoom.id,
-    //     date: new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' }),
-    //     content: this.newMessage
-    //   };
+  // if (this.newMessage && this.currentRoom) {
+  //   const message: Message = {
+  //     id: this.currentRoom.messages.length + 1,
+  //     id_creator: 1,
+  //     id_room: this.currentRoom.id,
+  //     date: new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' }),
+  //     content: this.newMessage
+  //   };
   //     console.log(message);
   //     this.chatApiService.sendMessage(message)
   //       .pipe(
@@ -119,7 +127,9 @@ export class ChatCurrentComponent implements OnInit {
   deleteMessage(message: Message) {
     // Логика для удаления сообщения
     if (this.currentRoom) {
-      this.currentRoom.messages = this.currentRoom.messages.filter(msg => msg !== message);
+      this.currentRoom.messages = this.currentRoom.messages.filter(
+        (msg) => msg !== message
+      );
     }
     this.hideContextMenu();
   }
@@ -127,7 +137,10 @@ export class ChatCurrentComponent implements OnInit {
   editMessage(message: Message) {
     // Логика для редактирования сообщения
     if (this.currentRoom) {
-      const newContent = prompt("Введите новый текст сообщения:", message.content);
+      const newContent = prompt(
+        'Введите новый текст сообщения:',
+        message.content
+      );
       if (newContent !== null) {
         message.content = newContent;
       }

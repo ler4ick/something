@@ -4,35 +4,49 @@ import { Observable } from 'rxjs';
 import { Message } from './messages';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SocketsService {
-
-  private  socket = io("http://localhost:3000", {
-  ackTimeout: 10000,
-  retries: 3,
+  private socket = io('http://localhost:3000', {
+    ackTimeout: 10000,
+    retries: 3,
   });
   private counter = 0;
 
   sendRoomId(roomId: number | undefined) {
-    this.socket.emit("get-room-messages", roomId);
+    this.socket.emit('get-room-messages', roomId);
   }
 
- sendMessage (msg: Message) {
+  sendMessage(msg: Message) {
     // compute a unique offset
     const clientOffset = `${this.socket.id}-${this.counter++}`;
     console.log(clientOffset);
-    this.socket.emit("chat message", msg, clientOffset);
+    this.socket.emit('chat message', msg, clientOffset);
+  }
+
+  getMessage() {
+    let observable = new Observable<Message>((observer) => {
+      this.socket.on('chat message', (msg: Message) => {
+        observer.next(msg);
+      });
+
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
   }
 
   getMessages() {
-    let observable = new Observable<Message[]>(observer => {
+    let observable = new Observable<Message[]>((observer) => {
       this.socket.on('room-messages', (msg: Message[]) => {
-        observer.next(msg)
-      })
+        observer.next(msg);
+      });
 
-      return () => { this.socket.disconnect()}
-    })
+      return () => {
+        this.socket.disconnect();
+      };
+    });
     return observable;
-  };
-};
+  }
+}
