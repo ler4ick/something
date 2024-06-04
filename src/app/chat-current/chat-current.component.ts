@@ -41,13 +41,30 @@ export class ChatCurrentComponent implements OnInit {
     });
 
     this.socketsService.getMessage().subscribe((message: Message) => {
-      this.messages = [...this.messages, message];
+      console.log(message);
+      const newMessage: Message = {
+        ...message,
+        isSentByLoggedInUser:
+          message.id_sender === this.authService.getUserId(),
+      };
+      this.messages = [...this.messages, newMessage];
     });
 
     this.socketsService.getMessages().subscribe((message: Message[]) => {
+      const newMessages = message.map((msg) => {
+        if (msg.id_sender === this.authService.getUserId()) {
+          msg.isSentByLoggedInUser = true;
+        } else {
+          msg.isSentByLoggedInUser = false;
+        }
+        return msg;
+      });
+
+      console.log(newMessages);
+
       //this.messages.push(message);
-      this.messages = [...message];
-      console.log(this.messages);
+      this.messages = [...newMessages];
+      // this.func_isSender(message)
     });
   }
 
@@ -56,7 +73,7 @@ export class ChatCurrentComponent implements OnInit {
   sendMessage() {
     if (this.newMessage && this.currentRoom) {
       const message: Message = {
-        id_creator: this.authService.getUserId()!,
+        id_sender: this.authService.getUserId()!,
         id_room: this.currentRoom.id,
         timestamp: new Date().toLocaleString([], {
           hour: '2-digit',

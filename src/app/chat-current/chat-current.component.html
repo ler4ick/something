@@ -2,12 +2,20 @@
   <div
     *ngFor="let message of this.messages"
     class="message-container"
+    [ngClass]="message.isSentByLoggedInUser ? 'user-message' : ''"
     (contextmenu)="showContextMenu($event, message)"
   >
-    <div class="message">
+    <div
+      class="message"
+      [ngClass]="message.isSentByLoggedInUser ? 'user-message' : ''"
+    >
       {{ message.content }}
     </div>
-    <span class="timestamp">{{ message.timestamp }}</span>
+    <span
+      class="timestamp"
+      [ngClass]="message.isSentByLoggedInUser ? 'user-message' : ''"
+      >{{ message.timestamp }}</span
+    >
     <div
       *ngIf="showMenu && selectedMessage === message"
       class="context-menu"
@@ -19,15 +27,6 @@
         <li (click)="editMessage(message)">Изменить</li>
       </ul>
     </div>
-  </div>
-  <div
-    *ngFor="let message of this.messages"
-    class="message-container user-message"
-  >
-    <div class="message user-message">
-      {{ message.content }}
-    </div>
-    <span class="timestamp user-message">{{ message.timestamp }}</span>
   </div>
 </div>
 
