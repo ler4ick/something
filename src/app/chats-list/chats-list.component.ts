@@ -61,11 +61,12 @@ export class ChatsListComponent {
     this.rooms = [...newRooms];
   }
 
+  sobes: Person | null = null;
+
   onChatClick(roomId: number) {
-    //this.chatService.setSelectedChatId(id);
     const room = this.rooms.find((r) => r.id === roomId);
     if (room) {
-      const user = this.chatService.getUserById(room.id_person_2);
+      const user = this.chatService.whoIsSender(room);
       if (user) {
         this.userNameChanged.emit({ name: user.name, lastName: user.lastname });
       }
@@ -76,16 +77,11 @@ export class ChatsListComponent {
   searchQuery: string = '';
   filteredPersons: Person[] = [];
 
-  // filterPersons() {
-  //   this.filteredPersons = persons.filter(person =>
-  //     person.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-  //     person.lastname.toLowerCase().includes(this.searchQuery.toLowerCase())
-  //   );
-  // }
-
   filteredRooms(): Room[] {
     return this.rooms.filter((room) => {
-      const user = this.chatService.getUserById(room.id_person_2);
+      //const user = this.chatService.getUserById(room.id_person_2);
+      const user = this.chatService.whoIsSender(room);
+
       if (user) {
         const fullName = `${user.name} ${user.lastname}`.toLowerCase();
         return fullName.includes(this.searchQuery.toLowerCase());
@@ -99,7 +95,8 @@ export class ChatsListComponent {
   }
 
   getPersonNameFromRoom(room: Room): string {
-    const user = this.chatService.getUserById(room.id_person_2);
+    //const user = this.chatService.getUserById(room.id_person_2);
+    const user = this.chatService.whoIsSender(room);
     return user ? `${user.name} ${user.lastname}` : '';
   }
 

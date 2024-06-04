@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 import { Room } from './rooms';
 import { Message } from './messages';
@@ -8,7 +9,7 @@ import { Person, persons } from './persons';
   providedIn: 'root',
 })
 export class ChatService {
-  constructor() {}
+  constructor(private authService: AuthService) {}
   rooms: Room[] = [];
   persons = [...persons];
 
@@ -38,5 +39,17 @@ export class ChatService {
 
   getUserById(id: number): Person | undefined {
     return this.persons.find((person) => person.id === id);
+  }
+
+  sobes: Person | null = null;
+
+  whoIsSender(room: Room) {
+    //const room = this.rooms.find((r) => r.id === roomId)!;
+    if (this.authService.getUserId() === room.id_person_2) {
+      this.sobes = this.getUserById(room.id_person_1)!;
+    } else {
+      this.sobes = this.getUserById(room.id_person_2)!;
+    }
+    return this.sobes;
   }
 }
