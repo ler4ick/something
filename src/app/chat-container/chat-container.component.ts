@@ -1,10 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { BehaviorSubject } from 'rxjs';
 import { ChatsListComponent } from '../chats-list/chats-list.component';
+import { Room } from '../rooms';
 @Component({
   selector: 'app-chat-container',
   templateUrl: './chat-container.component.html',
-  styleUrl: './chat-container.component.scss'
+  styleUrl: './chat-container.component.scss',
 })
 export class ChatContainerComponent {
   showChatList = true;
@@ -21,15 +23,14 @@ export class ChatContainerComponent {
   selectedUserName: string = '';
   selectedUserLastname: string = '';
 
-  onUserNameChanged(event: { name: string, lastName: string }) {
+  onUserNameChanged(event: { name: string; lastName: string }) {
     this.selectedUserName = event.name;
     this.selectedUserLastname = event.lastName;
   }
 
-  id: number = 0;
+  id: number | null = 0;
   isLoggedIn: boolean = false;
   async login() {
-    this.isLoggedIn = await this.authService.login(this.id);
+    this.isLoggedIn = await this.authService.login(this.id ?? -1);
   }
-
 }

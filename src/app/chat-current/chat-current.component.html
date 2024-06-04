@@ -1,29 +1,29 @@
-<!-- <div class="chat-area" *ngIf="dialogId"> -->
-<!-- <div class="chat-area">
-  {{ currentRoom?.id }}
-  <div *ngFor="let message of currentRoom?.messages; let i = index" class="message-container">
+<div class="chat-area">
+  <div
+    *ngFor="let message of this.messages"
+    class="message-container"
+    (contextmenu)="showContextMenu($event, message)"
+  >
     <div class="message">
       {{ message.content }}
     </div>
-    <span class="timestamp">{{ timestamps[i] }}</span>
-  </div>
-</div> -->
-
-<div class="chat-area">
-  <div *ngFor="let message of this.messages" class="message-container" (contextmenu)="showContextMenu($event, message)">
-    <div class="message" >
-      {{ message.content }}
-    </div>
     <span class="timestamp">{{ message.timestamp }}</span>
-    <div *ngIf="showMenu && selectedMessage === message" class="context-menu" [style.left.px]="contextMenuPosition.x" [style.top.px]="contextMenuPosition.y">
+    <div
+      *ngIf="showMenu && selectedMessage === message"
+      class="context-menu"
+      [style.left.px]="contextMenuPosition.x"
+      [style.top.px]="contextMenuPosition.y"
+    >
       <ul>
         <li (click)="deleteMessage(message)">Удалить</li>
         <li (click)="editMessage(message)">Изменить</li>
       </ul>
     </div>
-
   </div>
-  <div *ngFor="let message of this.messages" class="message-container user-message">
+  <div
+    *ngFor="let message of this.messages"
+    class="message-container user-message"
+  >
     <div class="message user-message">
       {{ message.content }}
     </div>
@@ -32,19 +32,14 @@
 </div>
 
 <div class="message-field">
-  <div class="attach">
-  </div>
+  <div class="attach"></div>
 
   <div class="text-area">
-    <textarea [(ngModel)]="newMessage" placeholder="Введите сообщение..."></textarea>
+    <textarea
+      [(ngModel)]="newMessage"
+      placeholder="Введите сообщение..."
+    ></textarea>
   </div>
-  <div class="emoji">
-  </div>
-
-  <!-- <div (click)="sendMessage()" class="send">
-  </div> -->
-  <div (click)="sendMessage()" class="send">
-  </div>
-
-
+  <div class="emoji"></div>
+  <div (click)="sendMessage()" class="send"></div>
 </div>

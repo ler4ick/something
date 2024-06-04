@@ -4,32 +4,38 @@ import { AuthService } from '../auth.service';
 import { TogglerService } from '../toggler.service';
 import { TimestampsService } from '../timestamps.service';
 import { SearchFilterService } from '../search-filter.service';
-import { Person, persons } from '../persons';
-import { Room, rooms } from '../rooms';
+import { Person } from '../persons';
+import { Room } from '../rooms';
 import { Message } from '../messages';
 import { Router } from '@angular/router';
+import { fetchRooms } from '../../queries/fetchRooms';
 
 @Component({
   selector: 'app-chats-list',
   templateUrl: './chats-list.component.html',
-  styleUrl: './chats-list.component.scss'
+  styleUrl: './chats-list.component.scss',
 })
 export class ChatsListComponent {
   //persons = [...persons];
-  rooms = [...rooms];
+  rooms: Room[] = [];
   showChatList = true;
 
   lastMessageTimestamp: string = '';
   lastMessage: string = '';
 
-  @Output() userNameChanged = new EventEmitter<{ name: string, lastName: string }>();
+  @Output() userNameChanged = new EventEmitter<{
+    name: string;
+    lastName: string;
+  }>();
 
-  constructor(private chatService: ChatService,
-              private timestampsService: TimestampsService,
-              private togglerService: TogglerService,
-              private searchFilterService: SearchFilterService,
+  constructor(
+    private chatService: ChatService,
+    private timestampsService: TimestampsService,
+    private togglerService: TogglerService,
+    private searchFilterService: SearchFilterService,
+    private authService: AuthService
   ) {
-    this.togglerService.showChatList$.subscribe(showChatList => {
+    this.togglerService.showChatList$.subscribe((showChatList) => {
       this.showChatList = showChatList;
     });
 
@@ -39,25 +45,32 @@ export class ChatsListComponent {
     });
   }
 
-  ngOnInit() {
-    this.timestampsService.lastMessageTimestamp$.subscribe(timestamp => {
+  async ngOnInit() {
+    this.timestampsService.lastMessageTimestamp$.subscribe((timestamp) => {
       this.lastMessageTimestamp = timestamp;
     });
-    this.timestampsService.lastMessage$.subscribe(lastmess => {
+    this.timestampsService.lastMessage$.subscribe((lastmess) => {
       this.lastMessage = lastmess;
     });
+
+    const newRooms = await fetchRooms(
+      this.authService.getUserId() ?? -1,
+      this.authService.getAuthToken()
+    );
+
+    this.rooms = [...newRooms];
   }
 
   onChatClick(roomId: number) {
     //this.chatService.setSelectedChatId(id);
-    const room = this.rooms.find(r => r.id === roomId);
+    const room = this.rooms.find((r) => r.id === roomId);
     if (room) {
       const user = this.chatService.getUserById(room.id_person_2);
       if (user) {
         this.userNameChanged.emit({ name: user.name, lastName: user.lastname });
       }
     }
-    this.chatService.setCurrentRoom(roomId);
+    this.chatService.setCurrentRoom(roomId, this.rooms);
   }
 
   searchQuery: string = '';
@@ -91,8 +104,8 @@ export class ChatsListComponent {
   }
 
   getLastMessageFromRoom(room: Room): Message | undefined {
-    return room.messages.length > 0 ? room.messages[room.messages.length - 1] : undefined;
+    return room.messages.length > 0
+      ? room.messages[room.messages.length - 1]
+      : undefined;
   }
-
-
 }

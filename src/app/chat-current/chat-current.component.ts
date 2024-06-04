@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Room } from '../rooms';
 import { Message } from '../messages';
 import { ChatApiService } from '../chat-api.service';
+import { AuthService } from '../auth.service';
 import { SocketsService } from '../sockets.service';
 import { tap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -14,9 +15,8 @@ import { throwError } from 'rxjs';
   styleUrl: './chat-current.component.scss',
 })
 export class ChatCurrentComponent implements OnInit {
-  //message: string =''; //тестовое
   newMessage: string = '';
-  //messages_test: string[] = []; //тестовое
+
   messages: Message[] = [];
   timestamps: string[] = [];
   selectedChatId: number = 1;
@@ -26,6 +26,7 @@ export class ChatCurrentComponent implements OnInit {
     private chatService: ChatService,
     private socketsService: SocketsService,
     private chatApiService: ChatApiService,
+    private authService: AuthService,
     private timestampsService: TimestampsService
   ) {}
 
@@ -52,16 +53,10 @@ export class ChatCurrentComponent implements OnInit {
 
   @Output() messageSent = new EventEmitter<string>();
 
-  // sendMessage(){
-  //   console.log(this.message);
-  //   this.socketsService.sendMessage(this.message);
-  //   this.message = '';
-  // }
-
   sendMessage() {
     if (this.newMessage && this.currentRoom) {
       const message: Message = {
-        id_creator: 1,
+        id_creator: this.authService.getUserId()!,
         id_room: this.currentRoom.id,
         timestamp: new Date().toLocaleString([], {
           hour: '2-digit',
