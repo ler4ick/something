@@ -66,6 +66,34 @@ export class ChatCurrentComponent implements OnInit {
       this.messages = [...newMessages];
       // this.func_isSender(message)
     });
+
+    this.socketsService
+      .listenToAnyMessageEdit()
+      .subscribe((message: Message) => {
+        console.log('edited message: ', message);
+
+        const newMessages = this.messages.map((msg) => {
+          if (msg.id === message.id) {
+            return {
+              ...message,
+              isSentByLoggedInUser:
+                msg.id_sender === this.authService.getUserId(),
+            };
+          }
+
+          return msg;
+        });
+
+        this.messages = [...newMessages];
+      });
+
+    this.socketsService
+      .listenToAnyMessageDelete()
+      .subscribe((id: number | undefined) => {
+        const newMessages = this.messages.filter((msg) => msg.id !== id);
+
+        this.messages = [...newMessages];
+      });
   }
 
   @Output() messageSent = new EventEmitter<string>();
@@ -138,27 +166,33 @@ export class ChatCurrentComponent implements OnInit {
     this.showMenu = false;
   }
 
-  deleteMessage(message: Message) {
+  deleteMessage(id: number | undefined) {
     // Логика для удаления сообщения
-    if (this.currentRoom) {
-      this.currentRoom.messages = this.currentRoom.messages.filter(
-        (msg) => msg !== message
-      );
+    if (this.currentRoom && id) {
+      this.socketsService.deleteMessage(id);
     }
     this.hideContextMenu();
   }
 
   editMessage(message: Message) {
+    const messageToEdit = {
+      ...message,
+    };
     // Логика для редактирования сообщения
     if (this.currentRoom) {
       const newContent = prompt(
         'Введите новый текст сообщения:',
-        message.content
+        messageToEdit.content
       );
       if (newContent !== null) {
-        message.content = newContent;
+        messageToEdit.content = newContent;
+        console.log('message to edit: ', messageToEdit);
+
+        this.socketsService.editMessage(messageToEdit);
       }
     }
     this.hideContextMenu();
   }
+
+  // Редактирование сообщения
 }

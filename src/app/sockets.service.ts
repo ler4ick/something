@@ -24,6 +24,14 @@ export class SocketsService {
     this.socket.emit('chat message', msg, clientOffset);
   }
 
+  editMessage(msg: Message) {
+    this.socket.emit('edit message', msg);
+  }
+
+  deleteMessage(id: number) {
+    this.socket.emit('delete message', id);
+  }
+
   getMessage() {
     let observable = new Observable<Message>((observer) => {
       this.socket.on('chat message', (msg: Message) => {
@@ -41,6 +49,32 @@ export class SocketsService {
     let observable = new Observable<Message[]>((observer) => {
       this.socket.on('room-messages', (msg: Message[]) => {
         observer.next(msg);
+      });
+
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
+
+  listenToAnyMessageEdit() {
+    let observable = new Observable<Message>((observer) => {
+      this.socket.on('edit message', (msg: Message) => {
+        observer.next(msg);
+      });
+
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
+
+  listenToAnyMessageDelete() {
+    let observable = new Observable<number | undefined>((observer) => {
+      this.socket.on('delete message', (id: number | undefined) => {
+        observer.next(id);
       });
 
       return () => {

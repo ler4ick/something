@@ -23,7 +23,7 @@
       [style.top.px]="contextMenuPosition.y"
     >
       <ul>
-        <li (click)="deleteMessage(message)">Удалить</li>
+        <li (click)="deleteMessage(message.id)">Удалить</li>
         <li (click)="editMessage(message)">Изменить</li>
       </ul>
     </div>
