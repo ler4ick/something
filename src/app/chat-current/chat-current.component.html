@@ -17,7 +17,9 @@
       >{{ message.timestamp }}</span
     >
     <div
-      *ngIf="showMenu && selectedMessage === message"
+      *ngIf="
+        showMenu && selectedMessage === message && message.isSentByLoggedInUser
+      "
       class="context-menu"
       [style.left.px]="contextMenuPosition.x"
       [style.top.px]="contextMenuPosition.y"
