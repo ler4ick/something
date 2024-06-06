@@ -1,4 +1,8 @@
 <div class="chat-area">
+  <div class="text" *ngIf="this.currentRoom === null">Выберете собеседника</div>
+  <div class="text" *ngIf="this.messages.length === 0">
+    Здесь пока нет сообщений...
+  </div>
   <div
     *ngFor="let message of this.messages"
     class="message-container"
@@ -32,7 +36,7 @@
   </div>
 </div>
 
-<div class="message-field">
+<div class="message-field" *ngIf="this.currentRoom !== null">
   <div class="attach"></div>
 
   <div class="text-area">

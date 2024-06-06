@@ -9,18 +9,18 @@
   app-top-bar {
     width: 773px;
     height: 50px;
-    background-color: #f0f0f0;
+    background-color: #e9e9e9;
     border-radius: 15px 15px 0 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
-    .burger-icon{
+    .burger-icon {
       width: 20px;
       height: 20px;
       margin-left: 20px;
-      background-image: url('svg-pic/burger.svg');
+      background-image: url("svg-pic/burger.svg");
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -39,7 +39,7 @@
         height: 17px;
         margin-left: 7px;
         align-self: center;
-        background-image: url('svg-pic/lupa.svg');
+        background-image: url("svg-pic/lupa.svg");
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -51,7 +51,7 @@
         //border-bottom: 1px solid #ccc;
         padding: 8px 0;
         width: 90%;
-        font-family: 'Sitara', Arial, sans-serif;
+        font-family: "Sitara", Arial, sans-serif;
         margin-left: 10px;
         font-size: 14px;
         color: #474747;
@@ -76,7 +76,7 @@
       justify-content: center;
 
       .FIO {
-        font-family: 'Sitara', Arial, sans-serif;
+        font-family: "Sitara", Arial, sans-serif;
         font-size: 15px;
         font-weight: bold;
         align-self: center;
@@ -87,7 +87,7 @@
         width: 18px;
         height: 18px;
         margin-left: 20px;
-        background-image: url('svg-pic/3-dots.svg');
+        background-image: url("svg-pic/3-dots.svg");
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -95,11 +95,11 @@
       }
     }
 
-    .cancel-icon{
+    .cancel-icon {
       width: 20px;
       height: 20px;
       margin-right: 20px;
-      background-image: url('svg-pic/cancel.svg');
+      background-image: url("svg-pic/cancel.svg");
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -107,6 +107,7 @@
   }
 
   .content {
+    width: 100%;
     display: flex;
     flex: 1;
 
@@ -114,10 +115,10 @@
       flex: 0 0 360px;
       width: 360px;
       height: 473px;
-      background-color: #fcfcfc;
+      background-color: #fdfdfd;
       display: flex;
-      flex-direction:column;
-      align-items:normal;
+      flex-direction: column;
+      align-items: normal;
       border-radius: 0 0 0 15px;
       border: 0.5px solid #f0f0f0;
 
@@ -132,29 +133,37 @@
         display: flex;
         flex-direction: row;
 
+        &:hover {
+          background-color: #ffffff;
+        }
+
+        &.active {
+          background-color: #ffffff;
+        }
+
         .ava {
           width: 34px;
           height: 34px;
           margin: 18px;
-          background-image: url('svg-pic/ava.svg');
+          background-image: url("svg-pic/ava.svg");
           background-size: cover;
           background-repeat: no-repeat;
           background-position: center;
           align-self: center;
         }
-        .cont-col{
+        .cont-col {
           position: relative;
-          font-family: 'Sitara', Arial, sans-serif;
+          font-family: "Sitara", Arial, sans-serif;
           font-size: 14px;
           width: 290px;
 
-          .name-dial{
+          .name-dial {
             margin-top: 13px;
-            color: #2C2C2C;
+            color: #2c2c2c;
           }
 
           .text {
-            color: #909CAC;
+            color: #909cac;
             margin-top: 8px;
             //border: 1px solid #be3e3e;
           }
@@ -165,17 +174,17 @@
             position: absolute;
             right: 13px;
             top: 13px;
-            background-image: url('svg-pic/zakrep.svg');
+            background-image: url("svg-pic/zakrep.svg");
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
             align-self: center;
           }
-          .time-rec-sen{
+          .time-rec-sen {
             position: absolute;
             right: 10px;
             bottom: 14px;
-            font-family: 'Sitara', Arial, sans-serif;
+            font-family: "Sitara", Arial, sans-serif;
             font-size: 12px;
             color: #3b65a1;
           }
@@ -184,26 +193,44 @@
     }
 
     app-chat-current {
+      width: 100%;
       flex: 0 0 410px;
-      background-color: #fafafa;
+      background-color: #fcfcfc;
       border-radius: 0 0 15px 0;
       border: 0.5px solid #f0f0f0;
       border-left: none;
       display: flex;
       flex-direction: column;
 
-      .chat-area{
+      .chat-area {
         height: 413px;
         overflow-y: auto; //скроллбар
         overflow-x: hidden;
+        position: relative;
 
-        .message-container{
+        .text {
+          position: absolute; // Установка дочернего элемента в абсолютную позицию
+          margin-bottom: 10px;
+
+          bottom: 0; // Расположение снизу
+          left: 50%; // Горизонтальное центрирование
+          font-family: "Sitara", Arial, sans-serif;
+          transform: translateX(
+            -50%
+          ); // Смещение влево на половину ширины элемента, чтобы центрировать
+          font-size: 15px; // Размер шрифта
+          color: #666e79; // Цвет текста
+        }
+
+        .message-container {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
           margin-bottom: 10px;
-          font-family: 'Sitara', Arial, sans-serif;
+          font-family: "Sitara", Arial, sans-serif;
           font-size: 14px;
+          word-break: break-all;
+          white-space: normal;
 
           &.user-message {
             align-items: flex-end;
@@ -212,11 +239,12 @@
           .message {
             max-width: 230px;
             width: fit-content;
-            margin: 10px;
+            margin: 8px;
             border-radius: 5px;
-            font-family: 'Sitara', Arial, sans-serif;
+            font-family: "Sitara", Arial, sans-serif;
             font-size: 14px;
-            background-color: #EFE4E4;
+            //background-color: #efe4e4;
+            background-color: #f8e8e8;
             color: #343846;
             padding: 10px;
             position: relative;
@@ -240,7 +268,6 @@
               //left: auto;
             }
           }
-
         }
 
         .context-menu {
@@ -279,6 +306,25 @@
       //   background-color: transparent; /* Цвет скроллбара */
       // }
 
+      ::-webkit-scrollbar {
+        width: 5px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #e4dfdf;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      // ::-webkit-scrollbar-track {
+      //   background-color: #e9e9e9;
+      //   border: 5px;
+      // }
+      // ::-webkit-scrollbar-button {
+      //   //background-color: #301934;
+      //   background-repeat: no-repeat;
+      //   background-size: 100%;
+      //   background-position: center;
+      // }
+
       .message-field {
         width: 410px;
         //height: 60px;
@@ -286,55 +332,55 @@
         display: flex;
         flex-direction: row;
 
-        .attach{
+        .attach {
           width: 18px;
           height: 18px;
           margin: 21px;
-          background-image: url('svg-pic/attach.svg');
+          background-image: url("svg-pic/attach.svg");
           background-size: cover;
           background-repeat: no-repeat;
           background-position: center;
           align-self: center;
         }
 
-        .text-area{
+        .text-area {
           width: 254px;
           margin-top: 12px;
           margin-bottom: 12px;
           display: flex;
           align-items: center;
 
-          textarea{
+          textarea {
             width: 100%;
-            resize:none;
-	          border:none;
-            display:block;
+            resize: none;
+            border: none;
+            display: block;
             outline: none;
-            background-color:#fafafa;
-            font-family: 'Sitara', Arial, sans-serif;
+            background-color: #fafafa;
+            font-family: "Sitara", Arial, sans-serif;
             color: #4e525f;
             font-size: 15px;
             height: 20px;
           }
         }
 
-        .emoji{
+        .emoji {
           width: 18px;
           height: 18px;
           margin: 21px;
-          background-image: url('svg-pic/smiley-happy.svg');
+          background-image: url("svg-pic/smiley-happy.svg");
           background-size: cover;
           background-repeat: no-repeat;
           background-position: center;
           align-self: center;
         }
 
-        .send{
+        .send {
           width: 18px;
           height: 18px;
           margin: 21px;
           margin-left: 0;
-          background-image: url('svg-pic/cursor.svg');
+          background-image: url("svg-pic/cursor.svg");
           background-size: cover;
           background-repeat: no-repeat;
           background-position: center;
@@ -344,5 +390,3 @@
     }
   }
 }
-
-
