@@ -65,13 +65,15 @@ export class ChatsListComponent {
 
   onChatClick(roomId: number) {
     const room = this.rooms.find((r) => r.id === roomId);
+
     if (room) {
       const user = this.chatService.whoIsSender(room);
       if (user) {
         this.userNameChanged.emit({ name: user.name, lastName: user.lastname });
       }
+
+      this.chatService.setCurrentRoom(roomId, this.rooms);
     }
-    this.chatService.setCurrentRoom(roomId, this.rooms);
   }
 
   searchQuery: string = '';
@@ -97,6 +99,7 @@ export class ChatsListComponent {
   getPersonNameFromRoom(room: Room): string {
     //const user = this.chatService.getUserById(room.id_person_2);
     const user = this.chatService.whoIsSender(room);
+
     return user ? `${user.name} ${user.lastname}` : '';
   }
 
@@ -105,4 +108,6 @@ export class ChatsListComponent {
       ? room.messages[room.messages.length - 1]
       : undefined;
   }
+
+  selectedIndex = -1;
 }

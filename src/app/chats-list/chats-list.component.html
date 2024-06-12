@@ -1,12 +1,18 @@
-
 <div *ngIf="showChatList">
-  <a class="dialog" *ngFor="let room of filteredRooms()" [title]="room.id + ' dialog'" (click)="onChatClick(room.id)" >
+  <a
+    class="dialog"
+    *ngFor="let room of filteredRooms()"
+    [title]="room.id + ' dialog'"
+    (click)="onChatClick(room.id)"
+  >
     <div class="ava"></div>
     <div class="cont-col">
-      <div class="name-dial"> {{ getPersonNameFromRoom(room) }} </div>
-      <div class="text" *ngIf="getLastMessageFromRoom(room)">{{ getLastMessageFromRoom(room)?.content }}</div>
-      <div class="zakrep"></div>
-      <div class="time-rec-sen" *ngIf="getLastMessageFromRoom(room)"> {{ getLastMessageFromRoom(room)?.timestamp }}</div>
+      <div class="name-dial">{{ getPersonNameFromRoom(room) }}</div>
+      <div class="text">
+        {{ room.last_message }}
+      </div>
+      <!-- <div class="zakrep"></div> -->
+      <div class="time-rec-sen"></div>
     </div>
   </a>
 </div>

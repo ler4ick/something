@@ -50,13 +50,15 @@ export class ChatCurrentComponent implements OnInit {
     });
 
     this.socketsService.getMessage().subscribe((message: Message) => {
-      console.log(message);
-      const newMessage: Message = {
-        ...message,
-        isSentByLoggedInUser:
-          message.id_sender === this.authService.getUserId(),
-      };
-      this.messages = [...this.messages, newMessage];
+      if (this.currentRoom) {
+        console.log(message);
+        const newMessage: Message = {
+          ...message,
+          isSentByLoggedInUser:
+            message.id_sender === this.authService.getUserId(),
+        };
+        this.messages = [...this.messages, newMessage];
+      }
     });
 
     this.socketsService.getMessages().subscribe((message: Message[]) => {
@@ -103,6 +105,19 @@ export class ChatCurrentComponent implements OnInit {
 
         this.messages = [...newMessages];
       });
+
+    this.socketsService.listenToAnyLastMessage().subscribe((msg: Message) => {
+      console.log('new last message: ', msg);
+
+      if (this.currentRoom) {
+        const updatedRoom = {
+          ...this.currentRoom,
+          last_message: msg.content,
+        };
+
+        this.chatService.updateRoom(updatedRoom);
+      }
+    });
   }
 
   @Output() messageSent = new EventEmitter<string>();

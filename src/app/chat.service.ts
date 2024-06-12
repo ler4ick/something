@@ -31,9 +31,11 @@ export class ChatService {
     }
   }
 
-  private updateRoom(room: Room): void {
+  updateRoom(room: Room): void {
     const index = this.rooms.findIndex((r) => r.id === room.id);
     this.rooms[index] = { ...room };
+    console.log('new current room: ', room);
+
     this.currentRoomSubject.next({ ...this.rooms[index] });
   }
 

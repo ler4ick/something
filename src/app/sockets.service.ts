@@ -83,4 +83,17 @@ export class SocketsService {
     });
     return observable;
   }
+
+  listenToAnyLastMessage() {
+    let observable = new Observable<Message>((observer) => {
+      this.socket.on('updateLastMessage', (msg: Message) => {
+        observer.next(msg);
+      });
+
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
 }
