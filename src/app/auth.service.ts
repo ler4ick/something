@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   private token = '';
   private userId: number | null = null;
+  private username: string = '';
 
   constructor() {}
 
@@ -18,6 +19,10 @@ export class AuthService {
     return this.userId;
   }
 
+  getUsername() {
+    return this.username;
+  }
+
   async login(id: number): Promise<boolean> {
     try {
       const user = await defaultApi.post('users/authenticate', {
@@ -26,6 +31,7 @@ export class AuthService {
 
       this.token = user.data.token;
       this.userId = user.data.id;
+      this.username = user.data.name + ' ' + user.data.lastname;
       return true;
     } catch (e) {
       console.log(e);

@@ -110,6 +110,26 @@
     width: 100%;
     display: flex;
     flex: 1;
+    position: relative;
+
+    &__username {
+      position: absolute;
+      bottom: 0;
+      width: 386px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 44px;
+      background-color: #e9e9e9;
+      overflow: hidden;
+      z-index: -1;
+      border-radius: 0 0 15px 15px;
+
+      span {
+        font-family: "Sitara", Arial, sans-serif;
+        color: #666e79;
+      }
+    }
 
     app-chats-list {
       flex: 0 0 360px;

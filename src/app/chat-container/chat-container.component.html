@@ -11,9 +11,13 @@
   ></app-top-bar>
   <div class="content">
     <app-chats-list
+      style="display: flex; height: 100%"
       (userNameChanged)="onUserNameChanged($event)"
     ></app-chats-list>
 
     <app-chat-current></app-chat-current>
+    <div class="content__username">
+      <span>{{ this.getUsername() }}</span>
+    </div>
   </div>
 </div>

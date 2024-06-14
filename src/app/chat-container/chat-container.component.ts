@@ -33,4 +33,8 @@ export class ChatContainerComponent {
   async login() {
     this.isLoggedIn = await this.authService.login(this.id ?? -1);
   }
+
+  getUsername() {
+    return this.authService.getUsername();
+  }
 }
